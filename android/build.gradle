@@ -1,0 +1,36 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+                classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.google.gms:google-services:4.3.14'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// Set the build directory for the root project
+// This will place build outputs in the parent directory
+rootProject.buildDir = '../build'
+
+// Set build directory for subprojects relative to root project's build directory
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+
+// Ensure that the ':app' project is evaluated during configuration
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+// Define a custom 'clean' task to delete the build directory
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
